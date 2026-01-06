@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sharada Maurya | Professional Portfolio</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/sidebar.css">
+  <link rel="stylesheet" href="assets/css/content.css">
+  <link rel="stylesheet" href="assets/css/bubbles.css">
+</head>
+<body>
+
+<div class="bubbles"></div>
+
+<button class="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h2>Sharada Maurya</h2>
+    <ul>
+      <li onclick="loadPage('home')" class="active">Home</li>
+      <li onclick="loadPage('qualifications')">Qualification & Marksheets</li>
+      <li onclick="loadPage('internships')">Internships & LOR</li>
+      <li onclick="loadPage('learning-resources')">Learning Resources</li>
+      <li onclick="loadPage('workshops')">Professional Development Workshops</li>
+      <li onclick="loadPage('certificates')">Certificates</li>
+      <li onclick="loadPage('editorial')">Editorial Contribution</li>
+      <li onclick="loadPage('students-work')">Student's Work</li>
+      <li onclick="loadPage('teaching-aids')">Self-Designed Teaching Aids</li>
+      <li onclick="loadPage('e-content')">E-Content</li>
+      <li onclick="loadPage('outreach')">Outreach Activities</li>
+      <li onclick="loadPage('resume')">Resume</li>
+      <li onclick="loadPage('contact')">Contact Info</li>
+      <li onclick="loadPage('references')">References</li>
+    </ul>
+  </aside>
+
+  <main id="content">
+    <section class="home-section">
+      <h1>Sharada Maurya</h1>
+      <h2>About Me</h2>
+      <p>
+        I am a final-year B.Ed student at K. J. Somaiya School of Education, Mumbai,
+        with an M.Sc in Chemistry. I aspire to create inclusive, inspiring science classrooms.
+      </p>
+      <p>
+        This portfolio showcases my journey in education, my qualifications, 
+        teaching experiences, and professional development activities.
+      </p>
+    </section>
+  </main>
+</div>
+
+<script>
+function loadPage(page) {
+  // Update active state in sidebar
+  document.querySelectorAll('.sidebar li').forEach(li => {
+    li.classList.remove('active');
+  });
+  event.target.classList.add('active');
+  
+  // Close sidebar on mobile after selection
+  if (window.innerWidth <= 900) {
+    document.querySelector('.sidebar').classList.add('collapsed');
+  }
+  
+  // Load page content
+  fetch(`pages/${page}.html`)
+    .then(response => {
+      if (!response.ok) throw new Error('Page not found');
+      return response.text();
+    })
+    .then(html => {
+      document.getElementById("content").innerHTML = html;
+    })
+    .catch(error => {
+      document.getElementById("content").innerHTML = `
+        <section class="error-section">
+          <h2>Content Not Available</h2>
+          <p>The requested page could not be loaded. Please try again later.</p>
+          <button onclick="loadPage('home')">Return to Home</button>
+        </section>
+      `;
+    });
+}
+</script>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/bubble.js"></script>
+</body>
+</html>
